@@ -1,0 +1,30 @@
+{
+    "process_params" : 
+        {
+            "n_ev": [3,3],
+            "n_descr": 50, 
+            "subsample_step": 1,  
+            "descr_type": "WKS",
+            "k_process": 180
+        },
+
+    "fm_fit_params" : 
+        {
+            "w_descr": 1.0, 
+            "w_lap": 0.01, 
+            "w_dcomm": 0.1, 
+            "w_orient": 0.0 
+        },
+
+    "zoomout_refine_params" : 
+        {
+            "nit": 130, 
+            "step" : 1, 
+            "verbose": true
+        },
+    "plots":false,
+    "main_output_dir": "default_output_dir",
+    "output_subdir": "default_output_subdir"
+
+
+}
