@@ -24,7 +24,7 @@ def fit_and_pred_zoomout(config, mesh1, mesh2, output_dir, model):
     pred = {'P_normalized':p, 'source':mesh2.vertices, 'target':mesh1.vertices}
     inference_filepath = save_inference(output_dir, pred)
     
-    return model, p2p_21_zo, inference_filepath
+    return model, p2p_21_zo
 
 def get_fm_norm(model):
     fms = model.FM.copy()

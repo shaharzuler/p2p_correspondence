@@ -19,11 +19,11 @@ def get_correspondence(mesh1_path, mesh2_path, config):
         fms_norm = get_fm_norm(model)
         plot_fm(output_dir, model, fms_norm, "FM")
 
-    model, p2p_21_zo, inference_filepath = fit_and_pred_zoomout(config, mesh1, mesh2, output_dir, model)
+    model, p2p_21_zo = fit_and_pred_zoomout(config, mesh1, mesh2, output_dir, model)
 
     if config.plots:
         plot_cmap(mesh1, mesh2, output_dir, p2p_21_zo, method="zoomout")
         fms_norm = get_fm_norm(model)
         plot_fm(output_dir, model, fms_norm, "zoomout")
     
-    return inference_filepath
+    return output_dir
