@@ -39,7 +39,7 @@ def save_inference(output_inference_dir, pred): #TODO add saving of downsampling
     key="18_28" # TEMP TODO
     keys_np = np.array([int(k) for k in key.split("_")])
     filepath = os.path.join(output_inference_dir, "model_inference.hdf5")
-    f =  h5py.File(filepath, 'a')
+    f =  h5py.File(filepath, 'w')
 
     f.create_dataset(name=f"p_{key}",      data=(pred["P_normalized"]), compression="gzip")
     f.create_dataset(name=f"source_{key}", data=(pred["source"]),       compression="gzip")
