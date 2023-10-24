@@ -24,6 +24,6 @@ def plot_cmap(mesh1, mesh2, output_dir, p2p_21, method=""):
 def plot_fm(output_dir, model, fms_norm, method=""):
     cv2.imwrite(os.path.join(output_dir,f"after_{method}.jpg"), fms_norm)
     plt.imshow(model.FM)
-    plt.savefig(os.path.join(output_dir,"after_{method}_plt.jpg"))
-    np.save(os.path.join(output_dir,"after_{method}.npy"), model.FM)
+    plt.savefig(os.path.join(output_dir,f"after_{method}_plt.jpg"))
+    np.save(os.path.join(output_dir,f"after_{method}.npy"), model.FM)
 
