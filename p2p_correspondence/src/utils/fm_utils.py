@@ -16,15 +16,21 @@ def fit_basic_model(config, mesh1, mesh2):
     p2p_21 = model.get_p2p(n_jobs=1)
     return model, p2p_21
 
-def fit_and_pred_zoomout(config, mesh1, mesh2, output_dir, model):
+def fit_zoomout(config, mesh1, mesh2, output_dir, model):
     model.zoomout_refine(**config.zoomout_refine_params)
     p2p_21_zo = model.get_p2p()
-    p = np.zeros((mesh2.n_vertices, mesh1.n_vertices))
-    p[np.arange(mesh2.n_vertices),p2p_21_zo] = 1.
-    pred = {'P_normalized':p, 'source':mesh2.vertices, 'target':mesh1.vertices}
-    inference_filepath = save_inference(output_dir, pred)
+    # p = np.zeros((mesh2.n_vertices, mesh1.n_vertices))
+    # p[np.arange(mesh2.n_vertices),p2p_21_zo] = 1.
+    # pred = {'P_normalized':p, 'source':mesh2.vertices, 'target':mesh1.vertices}
+    # inference_filepath = save_inference(output_dir, pred)
     
     return model, p2p_21_zo
+
+def predict(mesh1, mesh2, output_dir, p2p_corr):
+    p = np.zeros((mesh2.n_vertices, mesh1.n_vertices))
+    p[np.arange(mesh2.n_vertices), p2p_corr] = 1.
+    pred = {'P_normalized':p, 'source':mesh2.vertices, 'target':mesh1.vertices}
+    inference_filepath = save_inference(output_dir, pred)
 
 def get_fm_norm(model):
     fms = model.FM.copy()
