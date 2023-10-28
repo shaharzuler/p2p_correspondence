@@ -5,30 +5,28 @@ from .utils.visualization_utils import double_mesh_plot, plot_cmap, plot_fm
 from .utils.os_utils import create_output_dir
 
 def get_correspondence(mesh1_path, mesh2_path, config):
-    mesh1 = TriMesh(mesh1_path, area_normalize=config.preprocess.normalize_meshes_area)
-    mesh2 = TriMesh(mesh2_path, area_normalize=config.preprocess.normalize_meshes_area)
+    mesh1_norm = TriMesh(mesh1_path, area_normalize=config.preprocess.normalize_meshes_area)
+    mesh2_norm = TriMesh(mesh2_path, area_normalize=config.preprocess.normalize_meshes_area)
+
+    mesh1_no_norm = TriMesh(mesh1_path, area_normalize=False)
+    mesh2_no_norm = TriMesh(mesh2_path, area_normalize=False)
 
     output_dir = create_output_dir(config)
 
-    model, p2p_21 = fit_basic_model(config, mesh1, mesh2)
+    model, p2p_21 = fit_basic_model(config, mesh1_norm, mesh2_norm)
 
     if config.plots:
-        double_mesh_plot(mesh1, mesh2, prefix="clean", output_dir=output_dir)
+        double_mesh_plot(mesh1_no_norm, mesh2_no_norm, prefix="clean", output_dir=output_dir)
 
-        plot_cmap(mesh1, mesh2, output_dir, p2p_21, method="FM")
+        plot_cmap(mesh1_no_norm, mesh2_no_norm, output_dir, p2p_21, method="FM")
         fms_norm = get_fm_norm(model)
         plot_fm(output_dir, model, fms_norm, "FM")
 
-    model, p2p_21_zo = fit_zoomout(config, mesh1, mesh2, output_dir, model)
-    predict(
-        TriMesh(mesh1_path, area_normalize=False), 
-        TriMesh(mesh2_path, area_normalize=False), 
-        output_dir, 
-        p2p_21_zo
-        )
+    model, p2p_21_zo = fit_zoomout(config, mesh1_norm, mesh2_norm, output_dir, model)
+    predict(mesh1_no_norm, mesh2_no_norm, output_dir, p2p_21_zo)
 
     if config.plots:
-        plot_cmap(mesh1, mesh2, output_dir, p2p_21_zo, method="zoomout")
+        plot_cmap(mesh1_no_norm, mesh2_no_norm, output_dir, p2p_21_zo, method="zoomout")
         fms_norm = get_fm_norm(model)
         plot_fm(output_dir, model, fms_norm, "zoomout")
     
