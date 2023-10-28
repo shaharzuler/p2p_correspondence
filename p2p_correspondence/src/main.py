@@ -5,8 +5,8 @@ from .utils.visualization_utils import double_mesh_plot, plot_cmap, plot_fm
 from .utils.os_utils import create_output_dir
 
 def get_correspondence(mesh1_path, mesh2_path, config):
-    mesh1 = TriMesh(mesh1_path)
-    mesh2 = TriMesh(mesh2_path)
+    mesh1 = TriMesh(mesh1_path, area_normalize=config.preprocess.normalize_meshes_area)
+    mesh2 = TriMesh(mesh2_path, area_normalize=config.preprocess.normalize_meshes_area)
 
     output_dir = create_output_dir(config)
 

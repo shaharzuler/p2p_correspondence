@@ -24,7 +24,8 @@
         },
     "plots":false,
     "main_output_dir": "default_output_dir",
-    "output_subdir": "default_output_subdir"
-
-
+    "output_subdir": "default_output_subdir",
+    "preprocess": {
+        "normalize_meshes_area": true
+    }
 }
