@@ -1,6 +1,6 @@
 tqdm
 scikit-learn
-# pyFM @ git+https://github.com/RobinMagnet/pyFM.git
+pyFM @ git+https://github.com/RobinMagnet/pyFM.git
 easydict
 h5py
 opencv-python
