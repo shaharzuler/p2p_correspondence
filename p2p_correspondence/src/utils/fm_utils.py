@@ -2,6 +2,8 @@ import os
 import numpy as np
 import h5py
 from pyFM.functional import FunctionalMapping
+from flow_n_corr_utils import get_correspondence_from_p, Corr2ConstraintsConvertor
+
 
 
 def get_cmap(vertices):
@@ -19,18 +21,19 @@ def fit_basic_model(config, mesh1, mesh2):
 def fit_zoomout(config, mesh1, mesh2, output_dir, model):
     model.zoomout_refine(**config.zoomout_refine_params)
     p2p_21_zo = model.get_p2p()
-    # p = np.zeros((mesh2.n_vertices, mesh1.n_vertices))
-    # p[np.arange(mesh2.n_vertices),p2p_21_zo] = 1.
-    # pred = {'P_normalized':p, 'source':mesh2.vertices, 'target':mesh1.vertices}
-    # inference_filepath = save_inference(output_dir, pred)
     
     return model, p2p_21_zo
 
-def predict(mesh1, mesh2, output_dir, p2p_corr):
+def predict(mesh1, mesh2, output_dir, p2p_corr, check_flow=True):
     p = np.zeros((mesh2.n_vertices, mesh1.n_vertices))
     p[np.arange(mesh2.n_vertices), p2p_corr] = 1.
     pred = {'P_normalized':p, 'source':mesh2.vertices, 'target':mesh1.vertices}
     inference_filepath = save_inference(output_dir, pred)
+    if check_flow:
+        correspondence_template_unlabeled, _, _ = get_correspondence_from_p(mesh1.vertices, p, {"axis":1, "remove_high_var_corr":False})
+        flow_template_unlabeled_naive = Corr2ConstraintsConvertor.corr_to_flow(mesh2.vertices, mesh1.vertices, correspondence_template_unlabeled)
+        mean_l1_flow = np.sum(np.mean(np.abs(flow_template_unlabeled_naive),0))
+    return mean_l1_flow
 
 def get_fm_norm(model):
     fms = model.FM.copy()

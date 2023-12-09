@@ -23,12 +23,13 @@ def get_correspondence(mesh1_path, mesh2_path, config):
         plot_fm(output_dir, model, fms_norm, "FM")
 
     model, p2p_21_zo = fit_zoomout(config, mesh1_norm, mesh2_norm, output_dir, model)
-    predict(mesh1_no_norm, mesh2_no_norm, output_dir, p2p_21_zo)
-
+    mean_l1_flow = predict(mesh1_no_norm, mesh2_no_norm, output_dir, p2p_21_zo, config["validation"]["check_flow"])
+    flow_validation = False if mean_l1_flow > config["validation"]["mean_l1_flow_th"] else True
+    
     if config.plots:
         plot_cmap(mesh1_no_norm, mesh2_no_norm, output_dir, p2p_21_zo, method="zoomout")
         fms_norm = get_fm_norm(model)
         plot_fm(output_dir, model, fms_norm, "zoomout")
     
-    return output_dir
+    return output_dir, flow_validation
 
