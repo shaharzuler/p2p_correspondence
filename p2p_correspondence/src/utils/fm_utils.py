@@ -31,7 +31,7 @@ def predict(mesh1, mesh2, output_dir, p2p_corr, check_flow=True):
     inference_filepath = save_inference(output_dir, pred)
     if check_flow:
         correspondence_template_unlabeled, _, _ = get_correspondence_from_p(mesh1.vertices, p, {"axis":1, "remove_high_var_corr":False})
-        flow_template_unlabeled_naive = Corr2ConstraintsConvertor.corr_to_flow(mesh2.vertices, mesh1.vertices, correspondence_template_unlabeled)
+        flow_template_unlabeled_naive = flow_n_corr_utils.corr_cloud_to_flow_cloud(mesh2.vertices, mesh1.vertices, correspondence_template_unlabeled)
         mean_l1_flow = np.sum(np.mean(np.abs(flow_template_unlabeled_naive),0))
     return mean_l1_flow
 
