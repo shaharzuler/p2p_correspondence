@@ -7,7 +7,7 @@ mesh2_path = "/home/shahar/cardio_corr/my_packages/p2p_correspondence_project/de
 config = p2p_correspondence.get_default_config()
 config["plots"] = True
 config["zoomout_refine_params"]["nit"] = 100
-config["main_output_dir"] = "miccai_exps_120923_wks1010II"
+config["main_output_dir"] = "exps_120923_wks1010II"
 config["process_params"]["n_ev"] = [10,10]
 config["validation"]["mean_l1_flow_th"] = 10
 
