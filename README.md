@@ -18,8 +18,8 @@ Here's a basic usage example:
 import p2p_correspondence
 from easydict import EasyDict
 
-mesh1_path = "/path/to/mesh1.off"
-mesh2_path = "/path/to/mesh2.off"
+mesh1_path = "path/to/mesh1.off"
+mesh2_path = "path/to/mesh2.off"
 # Generate default configuration, read config file from src/default_config.json
 config = p2p_correspondence.get_default_config()
 # Perform point correspondence inference
